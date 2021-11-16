@@ -1,9 +1,7 @@
 package com.geekylikes.app.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Language {
@@ -14,13 +12,22 @@ public class Language {
     private String name;
     private String tag;
 
+    @ManyToMany
+    @JoinTable(
+            name="developer_language",
+            joinColumns = @JoinColumn(name="language_id"),
+            inverseJoinColumns = @JoinColumn(name = "developer_id")
+    )
+    Set<Developer> developers;
+
     public Language() {
 
     }
 
-    public Language(String name, String tag) {
+    public Language(String name, String tag, Set<Developer> developers) {
         this.name = name;
         this.tag = tag;
+        this.developers = developers;
     }
 
     public Long getId() {
@@ -46,4 +53,5 @@ public class Language {
     public void setTag(String tag) {
         this.tag = tag;
     }
+
 }

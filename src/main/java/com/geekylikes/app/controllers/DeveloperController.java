@@ -1,6 +1,7 @@
 package com.geekylikes.app.controllers;
 
 import com.geekylikes.app.models.Developer;
+import com.geekylikes.app.models.Language;
 import com.geekylikes.app.repositories.DeveloperRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -35,6 +36,19 @@ public class DeveloperController {
         return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
+    @PutMapping("/language")
+    public Developer addLanguage(@RequestBody Developer updates) {
+        Developer developer = repository.findById(updates.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        if (updates.languages != null) {
+            developer.languages.addAll(updates.languages);
+        }
+
+        return repository.save(developer);
+
+    }
+
+
     @PutMapping("/{id}")
     public @ResponseBody Developer updateDeveloper(@PathVariable Long id, @RequestBody Developer updateInfo) {
         Developer developer = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -49,12 +63,13 @@ public class DeveloperController {
         if (updateInfo.getCohort() != null) {
             developer.setCohort(updateInfo.getCohort());
         }
-        if (updateInfo.getLanguages() != null) {
-            developer.setLanguages(updateInfo.getLanguages());
+        if (updateInfo.languages != null) {
+            developer.languages = updateInfo.languages;
         }
 
         return repository.save(developer);
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> destroyDeveloper(@PathVariable Long id) {
