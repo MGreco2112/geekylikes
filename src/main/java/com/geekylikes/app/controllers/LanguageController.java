@@ -1,12 +1,11 @@
 package com.geekylikes.app.controllers;
 
-import com.geekylikes.app.models.Language;
+import com.geekylikes.app.models.language.Language;
 import com.geekylikes.app.repositories.LanguageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;

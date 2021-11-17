@@ -1,10 +1,13 @@
-package com.geekylikes.app.models;
+package com.geekylikes.app.models.language;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.geekylikes.app.models.developer.Developer;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-public class Language {
+public class Language{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
@@ -12,6 +15,7 @@ public class Language {
     private String name;
     private String tag;
 
+//    @JsonBackReference
     @ManyToMany
     @JoinTable(
             name="developer_language",

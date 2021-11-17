@@ -1,8 +1,7 @@
 package com.geekylikes.app.controllers;
 
-import com.geekylikes.app.models.Geekout;
+import com.geekylikes.app.models.geekout.Geekout;
 import com.geekylikes.app.repositories.GeekoutRepository;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

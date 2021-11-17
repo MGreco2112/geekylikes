@@ -1,7 +1,8 @@
 package com.geekylikes.app.controllers;
 
-import com.geekylikes.app.models.Developer;
-import com.geekylikes.app.models.Language;
+import com.geekylikes.app.models.avatar.Avatar;
+import com.geekylikes.app.models.developer.Developer;
+import com.geekylikes.app.repositories.AvatarRepository;
 import com.geekylikes.app.repositories.DeveloperRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -18,6 +19,8 @@ import java.util.List;
 public class DeveloperController {
     @Autowired
     private DeveloperRepository repository;
+    @Autowired
+    private AvatarRepository avatarRepository;
 
 
     @GetMapping
@@ -29,6 +32,14 @@ public class DeveloperController {
     public @ResponseBody ResponseEntity<Developer> createDeveloper(@RequestBody Developer newDeveloper) {
 
         return new ResponseEntity<Developer>(repository.save(newDeveloper), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/photo")
+    public ResponseEntity<Developer> addPhoto(@RequestBody Developer dev) {
+        Developer selDev = repository.findById(dev.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Avatar newAvatar = avatarRepository.save(dev.getAvatar());
+        selDev.setAvatar(newAvatar);
+        return new ResponseEntity<>(repository.save(selDev), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")

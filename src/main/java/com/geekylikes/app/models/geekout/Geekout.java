@@ -1,4 +1,6 @@
-package com.geekylikes.app.models;
+package com.geekylikes.app.models.geekout;
+
+import com.geekylikes.app.models.developer.Developer;
 
 import javax.persistence.*;
 
