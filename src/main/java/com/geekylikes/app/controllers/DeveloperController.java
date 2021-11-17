@@ -38,6 +38,11 @@ public class DeveloperController {
     public ResponseEntity<Developer> addPhoto(@RequestBody Developer dev) {
         Developer selDev = repository.findById(dev.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         Avatar newAvatar = avatarRepository.save(dev.getAvatar());
+
+        if (selDev.getAvatar() != null) {
+            avatarRepository.delete(selDev.getAvatar());
+        }
+
         selDev.setAvatar(newAvatar);
         return new ResponseEntity<>(repository.save(selDev), HttpStatus.CREATED);
     }

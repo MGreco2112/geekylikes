@@ -1,6 +1,8 @@
 package com.geekylikes.app.models.developer;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.geekylikes.app.models.avatar.Avatar;
 import com.geekylikes.app.models.geekout.Geekout;
 import com.geekylikes.app.models.language.Language;
@@ -9,6 +11,10 @@ import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
 
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 @Entity
 public class Developer {
     @Id
