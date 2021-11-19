@@ -40,7 +40,10 @@ public class DeveloperController {
         Avatar newAvatar = avatarRepository.save(dev.getAvatar());
 
         if (selDev.getAvatar() != null) {
-            avatarRepository.delete(selDev.getAvatar());
+            Avatar oldAv = selDev.getAvatar();
+            selDev.setAvatar(null);
+
+            avatarRepository.delete(oldAv);
         }
 
         selDev.setAvatar(newAvatar);
