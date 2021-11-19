@@ -41,9 +41,15 @@ public class DeveloperController {
 
         if (selDev.getAvatar() != null) {
             Avatar oldAv = selDev.getAvatar();
-            selDev.setAvatar(null);
 
-            avatarRepository.delete(oldAv);
+            // replace method
+//            selDev.setAvatar(null);
+//            avatarRepository.delete(oldAv);
+
+            // edit method
+            oldAv.setUrl(dev.getAvatar().getUrl());
+            avatarRepository.save(oldAv);
+            return new ResponseEntity<>(repository.save(selDev), HttpStatus.CREATED);
         }
 
         selDev.setAvatar(newAvatar);

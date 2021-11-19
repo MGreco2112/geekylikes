@@ -8,10 +8,11 @@ import com.geekylikes.app.models.developer.Developer;
 import javax.persistence.*;
 import java.util.Set;
 
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id"
-)
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id"
+//)
+
 @Entity
 public class Language{
     @Id
@@ -21,23 +22,21 @@ public class Language{
     private String name;
     private String tag;
 
-//    @JsonBackReference
-    @ManyToMany
-    @JoinTable(
-            name="developer_language",
-            joinColumns = @JoinColumn(name="language_id"),
-            inverseJoinColumns = @JoinColumn(name = "developer_id")
-    )
-    Set<Developer> developers;
+//    @ManyToMany
+//    @JoinTable(
+//            name="developer_language",
+//            joinColumns = @JoinColumn(name="language_id"),
+//            inverseJoinColumns = @JoinColumn(name = "developer_id")
+//    )
+//    Set<Developer> developers;
 
     public Language() {
 
     }
 
-    public Language(String name, String tag, Set<Developer> developers) {
+    public Language(String name, String tag) {
         this.name = name;
         this.tag = tag;
-        this.developers = developers;
     }
 
     public Long getId() {

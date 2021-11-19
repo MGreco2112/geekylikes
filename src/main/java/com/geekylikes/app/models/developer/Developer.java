@@ -1,8 +1,6 @@
 package com.geekylikes.app.models.developer;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import com.geekylikes.app.models.avatar.Avatar;
 import com.geekylikes.app.models.geekout.Geekout;
 import com.geekylikes.app.models.language.Language;
@@ -11,10 +9,10 @@ import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
 
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id"
-)
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id"
+//)
 @Entity
 public class Developer {
     @Id
@@ -23,31 +21,27 @@ public class Developer {
     private String name;
     private String email;
     private Integer cohort;
-//    private String[] languages;
-    @OneToMany
-    @JoinColumn(name="developer_id", referencedColumnName = "id")
-    private List<Geekout> geekouts;
 
-//    @JsonManagedReference
+//    @OneToMany(mappedBy = "developer", fetch = FetchType.LAZY)
+//    private List<Geekout> geekouts;
+
     @ManyToMany
     @JoinTable(
             name="developer_language",
             joinColumns = @JoinColumn(name="developer_id"),
             inverseJoinColumns = @JoinColumn(name="language_id")
     )
+    @JsonIgnoreProperties("developers")
     public Set<Language> languages;
 
     @OneToOne
     private Avatar avatar;
 
 
-    public Developer(String name, String email, Integer cohort, List<Geekout> geekouts, Set<Language> languages, Avatar avatar) {
+    public Developer(String name, String email, Integer cohort) {
         this.name = name;
         this.email = email;
         this.cohort = cohort;
-        this.geekouts = geekouts;
-        this.languages = languages;
-        this.avatar = avatar;
     }
 
     public Developer() {
@@ -86,8 +80,13 @@ public class Developer {
         this.cohort = cohort;
     }
 
-    public void setGeekouts(List<Geekout> geekouts) {
-        this.geekouts = geekouts;
+
+    public Set<Language> getLanguages() {
+        return languages;
+    }
+
+    public void setLanguages(Set<Language> languages) {
+        this.languages = languages;
     }
 
     public Avatar getAvatar() {
