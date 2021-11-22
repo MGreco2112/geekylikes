@@ -4,6 +4,7 @@ import com.geekylikes.app.models.avatar.Avatar;
 import com.geekylikes.app.models.developer.Developer;
 import com.geekylikes.app.repositories.AvatarRepository;
 import com.geekylikes.app.repositories.DeveloperRepository;
+import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -106,6 +107,11 @@ public class DeveloperController {
     @GetMapping("/cohort/{cohort}")
     public ResponseEntity<List<Developer>> getCohortDevelopers(@PathVariable Integer cohort) {
         return new ResponseEntity<>(repository.findAllByCohort(cohort, Sort.by("name")), HttpStatus.OK);
+    }
+
+    @GetMapping("/lang/{id}")
+    public List<Developer> getDevsByLanguage(@PathVariable Long langId) {
+        return repository.findAllByLanguages(langId);
     }
 
 
