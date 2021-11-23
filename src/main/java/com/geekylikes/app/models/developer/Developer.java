@@ -39,7 +39,7 @@ public class Developer {
     private Avatar avatar;
 
     @OneToMany(mappedBy = "geekout", fetch = FetchType.LAZY)
-    @JsonIncludeProperties("developer")
+    @JsonIgnore
     private Set<Approve> approves;
 
 
