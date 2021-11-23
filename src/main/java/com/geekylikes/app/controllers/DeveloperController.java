@@ -2,8 +2,11 @@ package com.geekylikes.app.controllers;
 
 import com.geekylikes.app.models.avatar.Avatar;
 import com.geekylikes.app.models.developer.Developer;
+import com.geekylikes.app.models.geekout.Geekout;
+import com.geekylikes.app.repositories.ApproveRepository;
 import com.geekylikes.app.repositories.AvatarRepository;
 import com.geekylikes.app.repositories.DeveloperRepository;
+import com.geekylikes.app.repositories.GeekoutRepository;
 import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -22,6 +25,8 @@ public class DeveloperController {
     private DeveloperRepository repository;
     @Autowired
     private AvatarRepository avatarRepository;
+    @Autowired
+    private GeekoutRepository geekoutRepository;
 
 
     @GetMapping
@@ -60,6 +65,11 @@ public class DeveloperController {
     @GetMapping("/{id}")
     public @ResponseBody Developer getById(@PathVariable Long id) {
         return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/likes/{devId}")
+    public List<Geekout> getApprovedGeekouts(@PathVariable Long id) {
+        return geekoutRepository.findAllByApproves_developer_id(id);
     }
 
     @PutMapping("/language")

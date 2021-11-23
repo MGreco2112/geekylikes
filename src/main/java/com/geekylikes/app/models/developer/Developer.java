@@ -1,6 +1,7 @@
 package com.geekylikes.app.models.developer;
 
 import com.fasterxml.jackson.annotation.*;
+import com.geekylikes.app.models.approve.Approve;
 import com.geekylikes.app.models.avatar.Avatar;
 import com.geekylikes.app.models.geekout.Geekout;
 import com.geekylikes.app.models.language.Language;
@@ -36,6 +37,10 @@ public class Developer {
 
     @OneToOne
     private Avatar avatar;
+
+    @OneToMany(mappedBy = "geekout", fetch = FetchType.LAZY)
+    @JsonIncludeProperties("developer")
+    private Set<Approve> approves;
 
 
     public Developer(String name, String email, Integer cohort) {

@@ -12,6 +12,9 @@ public interface DeveloperRepository extends JpaRepository<Developer, Long> {
     List<Developer> findAllByCohort(Integer cohort, Sort sort);
     List<Developer> findAllByLanguages(Long id);
 
+    //find all developers that liked geekout
+    List<Developer> findAllByApproves_geekout_id(Long id);
+
 
 //    @Query("SELECT * FROM developer WHERE cohort = ?1 AND ?2 in languages")
 //    Developer findByCohortAndLanguage(Integer cohort, String language);
